@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "kudo/version"
+require_relative "kudo/ping"
 
-module Kudo
-  module_function
-
-  def solve; end
-end
+module Kudo; end
