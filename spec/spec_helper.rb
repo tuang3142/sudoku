@@ -13,3 +13,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+def open_puzzle(file_name)
+  File.read("spec/fixtures/" + file_name + ".sudoku")
+end
