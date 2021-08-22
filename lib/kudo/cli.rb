@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
-require 'thor'
+require "thor"
+require "kudo"
 
 module Kudo
   class CLI < Thor
-    desc "ping pong!"
+    desc "ping", "pong!"
     def ping
-      "pong!"
+      puts Kudo.ping
     end
 
-    desc "solve INPUT", "Solves the sudoku given in the input"
-    def solve
-      Sudoku.new
+    desc "solve INPUT", "Solves the sudoku given in the input file"
+    def solve(file_name)
+      sudoku = File.read(file_name)
+      Kudo.solve(sudoku)
     end
   end
 end
