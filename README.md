@@ -50,6 +50,42 @@ Commands:
 8 4 2 9 6 3 1 5 7
 ```
 
+## Algorithm
+
+```ruby
+# lib/kudo/solver.rb
+
+def solve(sudoku)
+  empty_cells = Operator.get_empty_cells(sudoku)
+  try_solve(sudoku, empty_cells)
+end
+
+def try_solve(sudoku, empty_cells)
+  return sudoku if empty_cells.empty?
+
+  i, j = empty_cells.last
+  (1..9).each do |num|
+    next if Operator.get_row(sudoku, i).include?(num) ||
+            Operator.get_column(sudoku, j).include?(num) ||
+            Operator.get_subgrid(sudoku, i, j).include?(num)
+    sudoku[i][j] = num
+    empty_cells.pop
+    result = try_solve(sudoku, empty_cells)
+    return result if result
+    sudoku[i][j] = 0
+    empty_cells.append([i, j])
+  end
+
+  nil
+end
+```
+
+The backtracking strategy is as follows:
+
+- Get all the empty cells coordinates `empty_cells` beforehand to save time while backtracking
+- For each empty cell, try a number from 1 to 9 if it does not violate its row, column, and 3x3 subgrid
+- Remove it from `empty cells` then perform the recursion.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
